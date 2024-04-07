@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block head %}
+    <title>{{ department}} Newsletter</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom CSS styles */
+        body {
+            font-family: 'Arial', sans-serif; /* Change font family */
+            background-color: #f8f9fa; /* Light gray background color */
+            color: #333; /* Text color */
+        }
+
+        .newsletter-title {
+            font-size: 36px; /* Font size for newsletter title */
+            font-weight: bold; /* Bold font weight */
+            color: #007bff; /* Blue color for title */
+            margin-bottom: 30px; /* Bottom margin */
+        }
+
+        .newsletter-department {
+            font-size: 28px; /* Font size for department title */
+            font-weight: bold; /* Bold font weight */
+            color: #555; /* Dark gray color for department title */
+            margin-bottom: 20px; /* Bottom margin */
+        }
+
+        .newsletter-list {
+            padding: 0; /* Remove default padding */
+        }
+
+        .newsletter-item {
+            background-color: #fff; /* White background for newsletter items */
+            border-radius: 10px; /* Rounded corners */
+            padding: 20px; /* Padding */
+            margin-bottom: 20px; /* Bottom margin */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow */
+        }
+
+        .newsletter-item:hover {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Box shadow on hover */
+        }
+
+        .newsletter-link {
+            color: #007bff; /* Blue color for links */
+            font-size: 24px; /* Font size for links */
+            text-decoration: none; /* Remove underline from links */
+        }
+
+        .newsletter-link:hover {
+            text-decoration: underline; /* Underline links on hover */
+        }
+    </style>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <h1 class="newsletter-title">Newsletter</h1>
+    <h2 class="newsletter-department">{{ department }}</h2>
+    <div class="newsletter-list">
+        {% for newsletter in newsletters %}
+        <div class="newsletter-item">
+            <a href="{% url 'newsletter_detail' newsletter.department.name newsletter.title %}" class="newsletter-link">{{ newsletter.title }}</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

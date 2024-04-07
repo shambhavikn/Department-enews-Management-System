@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% block head %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom styles */
+        body {
+            background-color: #f8f9fa;
+            color: #343a40;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            padding: 30px;
+            margin-top: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .newsletter-title {
+            font-size: 36px;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .editor-info {
+            margin-bottom: 30px;
+        }
+
+        .editor-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+
+        .editor-email {
+            color: #6c757d;
+            font-size: 18px;
+        }
+
+        .newsletter-desc {
+            margin-bottom: 40px;
+            font-size: 20px;
+            line-height: 1.6;
+        }
+
+        .content-section {
+            margin-bottom: 50px;
+        }
+
+        .content-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #343a40;
+            margin-bottom: 20px;
+        }
+
+        .announcement-item,
+        .event-item,
+        .spotlight-item {
+            background-color: #f1f1f1;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .announcement-item h3,
+        .event-item h3,
+        .spotlight-item h3 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+
+        .announcement-content,
+        .event-description,
+        .spotlight-bio {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #343a40;
+        }
+
+        .announcement-date,
+        .event-details {
+            font-size: 16px;
+            color: #6c757d;
+            margin-top: 15px;
+        }
+
+        .event-details span {
+            margin-right: 20px;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <h1 class="newsletter-title">{{ newsletter.title }}</h1>
+    <div class="editor-info">
+        <h2 class="editor-name">Editor: {{ newsletter.editor }}</h2>
+        <p class="editor-email">{{ newsletter.editor_email }}</p>
+    </div>
+    <p class="newsletter-desc">{{ newsletter.desc }}</p>
+    <div class="content-section">
+        <h2 class="content-title">Announcements</h2>
+        {% for announcement in newsletter.announcement.all %}
+        <div class="announcement-item">
+            <h3>{{ announcement.title }}</h3>
+            <p class="announcement-content">{{ announcement.content }}</p>
+            <p class="announcement-date">Date: {{ announcement.date }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="content-section">
+        <h2 class="content-title">Events</h2>
+        {% for event in newsletter.event.all %}
+        <div class="event-item">
+            <h3>{{ event.title }}</h3>
+            <p class="event-description">{{ event.description }}</p>
+            <p class="event-details">
+                <span>Date: {{ event.date }}</span>
+                <span>Location: {{ event.location }}</span>
+            </p>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="content-section">
+        <h2 class="content-title">Employee Spotlights</h2>
+        {% for spotlight in newsletter.employee.all %}
+        <div class="spotlight-item">
+            <h3>{{ spotlight.name }}</h3>
+            <p class="spotlight-bio">{{ spotlight.bio }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

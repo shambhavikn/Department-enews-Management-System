@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                {%for message in messages %}
+                <div class="alert alert-success">
+                    {{message}}
+                </div>
+                {%endfor%}
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">Create Newsletter</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post" class="mt-4">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="id_title">Title:</label><br>
+                            {{ form.title }}
+                            {% if form.title.errors %}
+                                <small class="text-danger">{{ form.title.errors|join:", " }}</small>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_issue_date">Issue Date:</label><br>
+                            {{ form.issue_date }}
+                            {% if form.issue_date.errors %}
+                                <small class="text-danger">{{ form.issue_date.errors|join:", " }}</small>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_editor">Editor:</label><br>
+                            {{ form.editor }}
+                            {% if form.editor.errors %}
+                                <small class="text-danger">{{ form.editor.errors|join:", " }}</small>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_desc">Description:</label><br>
+                            {{ form.desc }}
+                            {% if form.desc.errors %}
+                                <small class="text-danger">{{ form.desc.errors|join:", " }}</small>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_department">Department:</label><br>
+                            <select name="department">
+                                {% for department in form.department.field.queryset %}
+                                    <option value="{{ department.id }}">{{ department.name }}</option>
+                                {% endfor %}
+                            </select>
+                             {% if form.department.errors %}
+                                <small class="text-danger">{{ form.department.errors|join:", " }}</small>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="announcement">Announcements:</label><br>
+                            <select name="announcement" id="announcement" class="form-control" multiple>
+                                {% for announcement in form.announcement.field.queryset %}
+                                <option value="{{ announcement.id }}">{{ announcement.title }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="employee">Employees:</label><br>
+                            <select name="employee" id="employee" class="form-control" multiple >
+                                {% for employee in form.employee.field.queryset %}
+                                <option value="{{ employee.id }}">{{ employee.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="event">Events:</label><br>
+                            <select name="event" id="event" class="form-control" multiple>
+                                {% for event in form.event.field.queryset %}
+                                <option value="{{ event.id }}">{{ event.title }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

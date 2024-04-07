@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{%block head%}
+<style>
+    .custom-color {
+        color:  #343a40;/* Replace with your desired color */
+    }
+    /* Custom CSS styles */
+    .department-item {
+        background-color: #f8f9fa; /* Light gray background color */
+        border: 1px solid #dee2e6; /* Gray border */
+        margin-bottom: 10px; /* Spacing between department items */
+        padding: 10px 15px; /* Padding inside each department item */
+        border-radius: 5px; /* Rounded corners */
+    }
+
+    .department-item a {
+        text-decoration: none; /* Remove underline from links */
+        color: #333; /* Dark text color */
+        font-size: 18px; /* Font size */
+    }
+
+    .department-item a:hover {
+        color: #007bff; /* Change text color on hover */
+        font-weight: bold; /* Bold text on hover */
+    }
+
+    .department-item:hover {
+        background-color: #cce5ff; /* Change background color on hover */
+    }
+
+</style>
+{%endblock%}
+{% block content %}
+<header class="bg-dark text-white py-4">
+    <div class="container">
+        <h1 class="display-4">Department E-news Management System </h1>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'subscribe' %}">Subscribe</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'create_newsletter' %}">Create Newsletter</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'create_employee_spotlight' %}">Create Employee Spotlight</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'create_announcement' %}">Create Announcement</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'create_event' %}">Create Event</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<section id="hero" class="py-5">
+    <div class="container">
+        <h2 class="mb-4">Discover the Latest Newsletters</h2>
+        <div class="row">
+            {% for newsletter in latest_newsletters|slice:":2" %}
+                <div class="col-md-6 mb-4">
+                    <a href="{% url 'newsletter_detail' newsletter.department.name newsletter.title %}" style="color: black;">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="card-title">{{ newsletter.title }}</h3></a>
+                                <hr>
+                                <p class="card-text">{{ newsletter.desc }}</p>
+                                <hr>
+                                <!-- Add more details about the newsletter as needed -->
+                            </div>
+                        </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+<section id="department-newsletters" class="py-5">
+    <div class="container">
+        <h1 class="mt-4">Departments</h1>
+        <ul class="list-group mt-4">
+            {% for department in departments %}
+                <li class="list-group-item department-item">
+                    <a href="{% url 'newsletter_by_department' department_name=department.name %}">
+                        {{ department.name }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+
+
+<section id="events" class="bg-light py-5">
+    <div class="container">
+        <h2 class="mb-4">Upcoming Events</h2>
+        <div class="row">
+            {% for event in upcoming_events %}
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">{{ event.title }}</h3>
+                            <!-- Add more details about the event as needed -->
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<footer class="bg-dark text-white py-4">
+    <div class="container text-center">
+        <p>&copy; 2024 Department E-news</p>
+    </div>
+</footer>
+{% endblock %}
